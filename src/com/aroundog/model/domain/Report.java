@@ -4,7 +4,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Report {
    private int report_id;
-   private String content;
+   private String title;
+
+private String content;
    private String regdate;
    private String email;
    private String phone;
@@ -14,6 +16,13 @@ public class Report {
    private double longi;
    private int member_id;
 
+   public String getTitle() {
+	   return title;
+   }
+   
+   public void setTitle(String title) {
+	   this.title = title;
+   }
    public MultipartFile[] getMyFile() {
       return myFile;
    }

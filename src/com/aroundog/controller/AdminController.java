@@ -5,14 +5,19 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aroundog.model.domain.Admin;
+import com.aroundog.model.domain.Report;
+import com.aroundog.model.domain.ReportImg;
 import com.aroundog.model.service.AdminService;
 import com.aroundog.model.service.FreeBoardService;
 import com.aroundog.model.service.ReportService;
@@ -50,6 +55,9 @@ public class AdminController {
 	public String userList() {	
 		return "admin/user/index";
 	}
+	
+	//Report 관련 ---------------------------------------------#
+	
 	@RequestMapping(value="/reports",method=RequestMethod.GET)
 	public ModelAndView reportList() {	
 		List reportList=reportService.selectAll();//모델앤뷰로 리스트 반환하고.. jsp에서 리스트 받아서 목록 출력!!
@@ -57,7 +65,40 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView("admin/report/index");
 		mav.addObject("reportList", reportList);
 		return mav;
+	} 
+	
+	@RequestMapping(value="/reports/{report_id}",method=RequestMethod.GET) 
+	public ModelAndView select(@PathVariable("report_id") int report_id) {
+		System.out.println("admin/report의 detail 실행함!!");		
+		  ModelAndView mav = new ModelAndView("admin/report/detail"); 
+		  Report report =  reportService.select(report_id); 
+		  System.out.println("report_id는"+report_id);
+	  
+		  mav.addObject("report",report);
+		 
+		return mav;
 	}
+	
+	@RequestMapping(value="/reportsimg/{report_id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String selectImg(@PathVariable("report_id") int report_id) {
+		System.out.println("첨부파일 볼래?"+report_id);
+		List<ReportImg> imgList = reportService.selectImg(report_id);
+		System.out.println("이미지 리스트 크기는 " +imgList.size());
+		
+		JSONArray jsonArray = new JSONArray();
+		for(int i = 0;i<imgList.size();i++) {
+			ReportImg ri = imgList.get(i);
+			JSONObject obj = new JSONObject();
+			obj.put("img", ri.getImg());
+			
+			jsonArray.add(obj);
+		}
+		System.out.println(jsonArray.toString());
+		return jsonArray.toString();
+	}
+	
+	//#---------------------------------------------Report 관련 끝
 	@RequestMapping(value="/adopts",method=RequestMethod.GET)
 	public String adoptList() {	
 		return "admin/adopt/index";

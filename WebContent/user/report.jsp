@@ -155,9 +155,14 @@ function areaChange(){
             <form class="col-lg-9" enctype="multipart/form-data">
                <input type="hidden" name = "member_id" value="1"/>
                <div class="form-group">
+                  <label for="first-name">제목</label> 
+                  <input type="text" name="title"    class="form-control" placeholder="제목을 작성해주세요">
+               </div>
+               <div class="form-group">
                   <label for="first-name">전화번호</label> 
                   <input type="text" name="phone"    class="form-control" placeholder="연락받을 전화번호">
                </div>
+               
                <div class="form-group">
                   <label for="last-name">이메일</label> 
                   <input type="text" name="email" class="form-control" placeholder="연락받을 이메일">
@@ -192,7 +197,7 @@ function areaChange(){
                      <textarea class="form-control" name="content"  rows="5" placeholder="제보하려는 동물에 대해서 상세한 내용을 적어주세요"></textarea>
 
                   <input type="file" name="myFile" multiple/>      
-                  <input type="button" value="제보하기" class="primary-btn float-right"></button>
+                  <input type="button" value="제보하기" class="primary-btn float-right"/>
             </form>
          </div>
       </div>

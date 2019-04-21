@@ -8,7 +8,6 @@
 <%
 	Admin admin = (Admin) request.getSession().getAttribute("admin");
 	List<Report> reportList = (List) request.getAttribute("reportList");
-	out.print("받아온 리스트의 개수는" + reportList.size());
 	pager.init(request, reportList.size());
 %>
 <!DOCTYPE html>
@@ -22,6 +21,10 @@
 	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <style>
 <%@ include file ="/admin/inc/maincss.jsp" %> 
@@ -59,12 +62,10 @@
 	<div id="Report" class="tabcontent">
 		<!--   <h3>제보관리 게시판</h3>
   <p>세원이꺼</p> -->
-		<table>
+		<table class="table table-bordered table-sm">
 			<tr>
 				<th>No</th>
-				<th>내용</th>
-				<th>lati</th>
-				<th>longi</th>
+				<th>제목</th>
 				<th>이메일</th>
 				<th>전화번호</th>
 			</tr>
@@ -74,19 +75,14 @@
 			<%	if (num < 1)	break;%>
 			<%	Report report = reportList.get(curPos++);	%>
 			<tr>
-				<td><%=num--%></td>
-		<%-- 		<td>
-					<a href="/report/detail?report_id=<%=report.getReport_id()%>"><%=report.get%></a>
-				</td> --%>
-				<td><%=report.getContent()%></td>
-				<td><%=report.getLati()%></td>
-				<td><%=report.getLongi()%></td>
+				<td style="height:30px"><%=num--%></td>
+				<td><a href="/reports/<%=report.getReport_id()%>"><%=report.getTitle()%></a></td>
 				<td><%=report.getEmail()%></td>
 				<td><%=report.getPhone()%></td>
 			</tr>
 			<%}	%>
 			<tr>
-				<td colspan="5">
+				<td colspan="4" align="center">
 					<%for (int i = pager.getFirstPage(); i <= pager.getLastPage(); i++) {%>
 						<%if (i > pager.getTotalPage()) break; %>
 						 <a href="/reports?currentPage=<%=i%>">[<%=i%>]</a> 
@@ -94,7 +90,6 @@
 				</td>
 			</tr>
 		</table>
-
 	</div>
 </body>
 </html>

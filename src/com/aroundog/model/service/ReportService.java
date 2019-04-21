@@ -9,4 +9,6 @@ public interface ReportService {
    public void insert(Report report);
    public void insertImg(ReportImg reportImg);
    public List selectAll();
+   public Report select(int report_id);
+   public List selectImg(int report_id);
 }

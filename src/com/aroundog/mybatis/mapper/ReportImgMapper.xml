@@ -7,4 +7,8 @@
       insert into reportimg(reportimg_id,img,report_id)
       values(seq_reportimg.nextval,#{img},#{report.report_id})
    </insert>
+   
+   <select id="selectImgList" resultType="ReportImg">
+   	select * from reportimg where report_id = #{report_id}
+   </select>
 </mapper>
