@@ -29,7 +29,7 @@
 <style>
 <%@ include file ="/admin/inc/maincss.jsp" %> 
 #Report {
-	background-color: green;
+	background-color: white;
 }
 </style>
 </head>
@@ -60,9 +60,7 @@
 		</button>
 	</form>
 	<div id="Report" class="tabcontent">
-		<!--   <h3>제보관리 게시판</h3>
-  <p>세원이꺼</p> -->
-		<table class="table table-bordered table-sm">
+		<table class="table table-bordered table-sm" style="text-align: center">
 			<tr>
 				<th>No</th>
 				<th>제목</th>
@@ -75,18 +73,28 @@
 			<%	if (num < 1)	break;%>
 			<%	Report report = reportList.get(curPos++);	%>
 			<tr>
-				<td style="height:30px"><%=num--%></td>
-				<td><a href="/reports/<%=report.getReport_id()%>"><%=report.getTitle()%></a></td>
-				<td><%=report.getEmail()%></td>
-				<td><%=report.getPhone()%></td>
+				<td width="30px" height="80px" style="vertical-align: middle"><%=num--%></td>
+				<td style="vertical-align: middle"><a href="/reports/<%=report.getReport_id()%>"><%=report.getTitle()%></a></td>
+				<td style="vertical-align: middle"><%=report.getEmail()%></td>
+				<td style="vertical-align: middle"><%=report.getPhone()%></td>
 			</tr>
 			<%}	%>
 			<tr>
 				<td colspan="4" align="center">
+				<%if(pager.getFirstPage()-1>0){ %>
+					<a href="/notice/list.jsp?currentPage<%=pager.getFirstPage()-1%>">◀</a>
+				<%}else{ %>
+					<a href="javascript:alert('첫번째 페이지입니다');">◀</a>
+				<%} %>
 					<%for (int i = pager.getFirstPage(); i <= pager.getLastPage(); i++) {%>
 						<%if (i > pager.getTotalPage()) break; %>
 						 <a href="/reports?currentPage=<%=i%>">[<%=i%>]</a> 
 						 <%	} %>
+				<%if(pager.getLastPage()+1<pager.getTotalPage()){ %>
+					<a href="/notice/list.jsp?currentPage=<%=pager.getLastPage()+1%>">▶</a>
+				<%}else{ %>
+					<a href="javascript:alert('마지막 페이지입니다!');">▶</a>
+				<%} %>
 				</td>
 			</tr>
 		</table>
